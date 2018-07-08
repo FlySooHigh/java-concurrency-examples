@@ -6,16 +6,22 @@ public class RunnableExampleLambdaExpression {
     public static void main(String[] args) {
         System.out.println("Inside : " + Thread.currentThread().getName());
 
-        System.out.println("Creating Runnable...");
+        System.out.println("Creating Runnables...");
         Runnable runnable = () -> {
             System.out.println("Inside : " + Thread.currentThread().getName());
         };
 
-        System.out.println("Creating Thread...");
-        Thread thread = new Thread(runnable);
+        Runnable runnable1 = () -> {
+            System.out.println("Inside : " + Thread.currentThread().getName());
+        };
 
-        System.out.println("Starting Thread...");
+        System.out.println("Creating Threads...");
+        Thread thread = new Thread(runnable);
+        Thread thread1 = new Thread(runnable1);
+
+        System.out.println("Starting Threads...");
         thread.start();
+        thread1.start();
 
     }
 }

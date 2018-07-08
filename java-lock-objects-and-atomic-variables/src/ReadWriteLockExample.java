@@ -1,5 +1,6 @@
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
@@ -34,8 +35,12 @@ class ReadWriteCounter {
 
 public class ReadWriteLockExample {
 
-    public static void main(String[] args) {
-        ExecutorService executorService = Executors.newFixedThreadPool(3);
+    private static final int numberOfThreads = 10;
+    private static final int numberOfReadTasks = 10;
+    private static final int numberOfWriteTasks = 10;
+
+    public static void main(String[] args) throws InterruptedException {
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
 
         ReadWriteCounter counter = new ReadWriteCounter();
 
@@ -49,14 +54,13 @@ public class ReadWriteLockExample {
                     " Write Task : " + counter.incrementAndGetCount());
         };
 
-        executorService.submit(readTask);
-        executorService.submit(readTask);
 
-        executorService.submit(writeTask);
-
-        executorService.submit(readTask);
-        executorService.submit(readTask);
+        for (int i = 0; i < numberOfWriteTasks; i++) {
+            executorService.submit(writeTask);
+            executorService.submit(readTask);
+        }
 
         executorService.shutdown();
+        executorService.awaitTermination(60, TimeUnit.SECONDS);
     }
 }

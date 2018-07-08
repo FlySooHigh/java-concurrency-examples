@@ -1,5 +1,5 @@
 public class MemoryConsistencyErrorExample {
-    private static boolean sayHello = false;
+    private static volatile boolean sayHello = false;
 
     public static void main(String[] args) throws InterruptedException {
 

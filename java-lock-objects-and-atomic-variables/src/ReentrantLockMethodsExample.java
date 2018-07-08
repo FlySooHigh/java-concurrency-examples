@@ -10,7 +10,7 @@ class ReentrantLockMethodsCounter {
 
     public int incrementAndGet() {
         // Check if the lock is currently acquired by any thread
-        System.out.println("IsLocked : " + lock.isLocked());
+        System.out.println("IsLocked : " + lock.isLocked() + " " + Thread.currentThread().getName());
 
         // Check if the lock is acquired by the current thread itself.
         System.out.println("IsHeldByCurrentThread : " + lock.isHeldByCurrentThread());
